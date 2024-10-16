@@ -277,6 +277,7 @@ function preencherCamposCliente(cliente) {
 
 
 //Barras de pesquisa e ambientes
+
 // Função para filtrar e exibir os produtos na tabela de pesquisa
 async function filtrarProdutos() {
     const pesquisa = document.getElementById('pesquisaProduto').value.toLowerCase();
