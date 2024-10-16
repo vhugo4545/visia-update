@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login de Vendedores</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400;500;600;700&display=swap");
+
+        :root {
+            --c-primary: #b2b377;
+            --p-8-16: 8px 16px;
+            --m-8-0: 8px 0;
+        }
+
+        html {
+            font-size: 63.5%;
+            font-family: "Mitr", sans-serif;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            background-image: url("https://www.newlight.net.br/media/product/9f8/luminaria-coluna-de-ch-o-moderna-com-6-bolas-brancas-estrutura-dourada-jabuticaba-8d7.png");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-container {
+            padding: 40px 20px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        .login-content {
+            backdrop-filter: blur(6px);
+            border: 2px solid #ffffff80;
+            box-shadow: -1px -1px 30px -8px rgb(0, 0, 0);
+            padding: 30px; /* Aumenta o padding para dar mais espaço */
+            border-radius: 1.6rem;
+            color: white;
+            width: 100%;
+            max-width: 900px; /* Aumenta a largura máxima em 30% */
+        }
+
+        .logo {
+            font-size: 2rem;
+        }
+
+        h2 {
+            font-size: 3rem;
+            line-height: 2.8;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-bottom: 1.2rem;
+            width: 100%;
+        }
+
+        .login-form input {
+            width: 100%;
+            background-color: #ffffff40;
+            color: #fff;
+            padding: var(--p-8-16);
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        input::placeholder {
+            color: #fff;
+        }
+
+        input[type="submit"] {
+            border: none;
+            background-color: var(--c-primary);
+            color: #000000;
+            font-weight: 600;
+        }
+
+        .login-netoworks,
+        .login-or {
+            margin: 16px 0;
+        }
+
+        hr {
+            width: 70%;
+            border-color: #ffffff40;
+        }
+
+        .login-icons {
+            text-align: left;
+            margin: 0 auto;
+            margin-bottom: 2.5rem;
+            max-width: 260px;
+        }
+
+        .login-icons li {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            border: 1px solid #ffffff40;
+            padding: var(--p-8-16);
+            margin: var(--m-8-0);
+            border-radius: 4px;
+            font-size: 1.4rem;
+            font-weight: 200;
+        }
+
+        .login-icons li > [type="logo"] {
+            margin-right: 8px;
+        }
+
+        .login-footer {
+            position: absolute;
+            color: var(--c-primary);
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <div class="login-content">
+            <div class="login-content_header">
+                <span class="logo">
+                    <box-icon type='solid' name='Acropoluz' color="#87A922"></box-icon> Acropoluz
+                </span>
+                <h2>Seja bem-vindo!</h2>
+            </div>
+            <div>
+                <form class="login-form" id="loginForm">
+                    <input type="text" id="username" placeholder="Digite seu usuário" required>
+                    <input type="password" id="password" placeholder="Digite sua senha" required>
+                    <input type="button" class="btn btn-primary w-100" onclick="login()" value="Entrar">
+                </form>
+                <div id="loginError" class="alert alert-danger mt-3 d-none" role="alert">
+                    Usuário ou senha incorretos!
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="login-footer">
+        <p>Terms of use | Privacy policy</p>
+    </div>
+
+    <script>
+        // Função para salvar dados dos vendedores no localStorage
+        function salvarDadosVendedores() {
+            const vendedores = [
+                { nome: "cicero magalhaes", usuario: "cicero.magalhaes", senha: "senha123" },
+                { nome: "daniela turchetti c magalhaes", usuario: "daniela.magalhaes", senha: "senha123" },
+                { nome: "pâmella fernanda porto matias", usuario: "pamella.matias", senha: "senha123" },
+                { nome: "roberta aparecida venâncio carvalho", usuario: "roberta.carvalho", senha: "senha123" },
+                { nome: "valéria sousa maciel", usuario: "valeria.maciel", senha: "senha123" },
+                { nome: "scarlleth fernandes", usuario: "scarlleth.fernandes", senha: "senha123" },
+                { nome: "isabella david", usuario: "isabella.david", senha: "senha123" },
+                { nome: "roberto ramos Pacó", usuario: "roberto.paco", senha: "senha123" },
+                { nome: "marcelo versiani", usuario: "marcelo.versiani", senha: "senha123" },
+                { nome: "nayene karen lemos carvalho", usuario: "nayene.carvalho", senha: "senha123" },
+                { nome: "paulo leite", usuario: "paulo.leite", senha: "senha123" },
+                { nome: "cecilia corgosinho", usuario: "cecilia.corgosinho", senha: "senha123" },
+                { nome: "ana paula felix", usuario: "ana.paula", senha: "senha123" },
+                { nome: "gabriel vinícius do carmo ", usuario: "gabriel.carmo", senha: "senha123" },
+            ];
+
+            // Salvar cada vendedor no localStorage
+            vendedores.forEach((vendedor, index) => {
+                localStorage.setItem(`vendedor_${index}`, JSON.stringify(vendedor));
+            });
+        }
+
+        // Chamar a função para salvar os vendedores no localStorage ao carregar a página
+        document.addEventListener("DOMContentLoaded", salvarDadosVendedores);
+
+        // Função de login
+        function login() {
+            // Obter valores dos campos de login
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            // Procurar o vendedor no localStorage
+            let isAuthenticated = false;
+            let vendedorAutenticado = null;
+
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key.startsWith("vendedor_")) {
+                    const vendedor = JSON.parse(localStorage.getItem(key));
+
+                    // Validar usuário e senha
+                    if (vendedor.usuario === username && vendedor.senha === password) {
+                        isAuthenticated = true;
+                        vendedorAutenticado = vendedor;
+                        break;
+                    }
+                }
+            }
+
+            // Verificar autenticação
+            if (isAuthenticated) {
+                // Salvar o nome do vendedor e o token no localStorage
+                const token = `token_${new Date().getTime()}`;
+                localStorage.setItem("vendedorSelecionado", vendedorAutenticado.nome);
+                localStorage.setItem("authToken", token);
+
+                // Redirecionar para a página pedidos.html se autenticação for bem-sucedida
+                window.location.href = "listar/pedidos.html";
+            } else {
+                // Mostrar mensagem de erro
+                document.getElementById("loginError").classList.remove("d-none");
+            }
+        }
+    </script>
+
+    <!-- Boxicons CDN -->
+    <script src="https://unpkg.com/boxicons@2.1.1/dist/boxicons.js"></script>
+</body>
+
+</html>
