@@ -293,8 +293,10 @@ async function filtrarProdutos() {
         divTabelaProdutos.style.display = 'block';
     }
 
+    // Separar a pesquisa em termos usando a barra como delimitador
+    const termosPesquisa = pesquisa.split('/').map(termo => termo.trim());
+
     try {
-        // Alterar a URL da rota para a correta
         const response = await fetch('https://acropoluz-one-cdc9c4e154cc.herokuapp.com/produtos/visualizar');
         if (!response.ok) {
             throw new Error('Erro ao buscar os produtos');
@@ -306,7 +308,10 @@ async function filtrarProdutos() {
             const codigo = produto.codigo ? produto.codigo.toLowerCase() : '';
             const codigoProduto = produto.codigo_produto ? produto.codigo_produto.toString().toLowerCase() : '';
 
-            return descricao.includes(pesquisa) || codigo.includes(pesquisa) || codigoProduto.includes(pesquisa);
+            // Verifica se todos os termos estão presentes na descrição, código ou código do produto
+            return termosPesquisa.every(termo => 
+                descricao.includes(termo) || codigo.includes(termo) || codigoProduto.includes(termo)
+            );
         });
 
         produtosFiltrados.forEach(produto => {
@@ -326,7 +331,6 @@ async function filtrarProdutos() {
             tabelaProdutos.appendChild(row);
         });
 
-     
     } catch (error) {
         console.error('Erro ao buscar produtos:', error);
     }
@@ -645,7 +649,7 @@ function criarTabelaAmbiente(ambiente) {
         }
     }).disableSelection();
 }
-
+//produtos genericos 
 function adicionarOuIncluirProdutoGenerico() {
     const ambienteSelecionado = document.getElementById('ambienteSelecionado').value;
 

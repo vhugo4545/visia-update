@@ -240,8 +240,10 @@ async function filtrarProdutos() {
         divTabelaProdutos.style.display = 'block';
     }
 
+    // Separar a pesquisa em termos usando a barra como delimitador
+    const termosPesquisa = pesquisa.split('/').map(termo => termo.trim());
+
     try {
-        // Alterar a URL da rota para a correta
         const response = await fetch('https://acropoluz-one-cdc9c4e154cc.herokuapp.com/produtos/visualizar');
         if (!response.ok) {
             throw new Error('Erro ao buscar os produtos');
@@ -253,7 +255,10 @@ async function filtrarProdutos() {
             const codigo = produto.codigo ? produto.codigo.toLowerCase() : '';
             const codigoProduto = produto.codigo_produto ? produto.codigo_produto.toString().toLowerCase() : '';
 
-            return descricao.includes(pesquisa) || codigo.includes(pesquisa) || codigoProduto.includes(pesquisa);
+            // Verifica se todos os termos estão presentes na descrição, código ou código do produto
+            return termosPesquisa.every(termo => 
+                descricao.includes(termo) || codigo.includes(termo) || codigoProduto.includes(termo)
+            );
         });
 
         produtosFiltrados.forEach(produto => {
@@ -273,11 +278,11 @@ async function filtrarProdutos() {
             tabelaProdutos.appendChild(row);
         });
 
-     
     } catch (error) {
         console.error('Erro ao buscar produtos:', error);
     }
 }
+
 // Função para pesquisar ambientes
 async function pesquisarAmbiente() {
     const pesquisa = document.getElementById('ambienteSelecionado').value.toLowerCase();
@@ -597,6 +602,77 @@ function removerAmbiente(ambiente) {
         // Caso o usuário clique em "Cancelar", a remoção será interrompida
         alert('A remoção foi cancelada.');
     }
+}
+
+//produtos genericos 
+function adicionarOuIncluirProdutoGenerico() {
+    const ambienteSelecionado = document.getElementById('ambienteSelecionado').value;
+
+    if (ambienteSelecionado === '') {
+        alert('Por favor, selecione um ambiente para adicionar produtos.');
+        return;
+    }
+
+    let tabelaAmbiente = document.getElementById(`tabela-${ambienteSelecionado}`);
+    if (!tabelaAmbiente) {
+        criarTabelaAmbiente(ambienteSelecionado);
+        tabelaAmbiente = document.getElementById(`tabela-${ambienteSelecionado}`);
+    }
+
+    // Verifica se algum produto foi selecionado
+    const checkboxes = document.querySelectorAll('.checkbox-selecionar-produto:checked');
+    if (checkboxes.length === 0) {
+        alert('Nenhum produto selecionado.');
+        return;
+    }
+
+    // Adiciona cada produto selecionado à tabela do ambiente
+    checkboxes.forEach(checkbox => {
+        const row = checkbox.closest('tr');
+        const nomeProduto = row.querySelector('.produto-nome').textContent;
+        const codigoProduto = row.querySelector('td:nth-child(4)').textContent;
+        const codigoInterno = row.querySelector('td:nth-child(5)').textContent;
+
+        // Corrige a leitura e formatação do valor unitário
+        let valorUnitarioText = row.querySelector('td:nth-child(6)').textContent.replace(/[^\d,]/g, '').replace('.', '').replace(',', '.');
+        const valorUnitario = parseFloat(valorUnitarioText) || 0;
+        const imagemUrl = row.querySelector('img') ? row.querySelector('img').src : '';
+
+        const newRow = document.createElement('tr');
+        newRow.innerHTML = `
+            <td><input type="checkbox" class="checkbox-selecionar-produto"></td>
+            <td>${imagemUrl ? `<img src="${imagemUrl}" alt="Imagem do Produto Selecionado" style="max-width: 50px;">` : 'Sem imagem'}</td>
+            <td>${nomeProduto}</td>
+            <td>${codigoProduto}</td>
+            <td>${codigoInterno}</td>
+            <td><span class="valorUnitario">${valorUnitario.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span></td>
+            <td><input type="number" class="form-control quantidadeProduto" min="1" value="1" onchange="atualizarTodosOsCalculos('${ambienteSelecionado}')"></td>
+            <td><input type="text" class="form-control valorTotal" value="${(valorUnitario).toFixed(2).replace('.', ',')}" onchange="atualizarValorUnitario(this, '${ambienteSelecionado}')"></td>
+            <td>
+                <i class="fa fa-times" style="cursor: pointer; color: red;" onclick="removerProduto(this, '${ambienteSelecionado}')" title="Remover Produto"></i>
+                <i class="fa fa-question-circle" style="cursor: pointer; color: blue; margin-right: 10px;" onclick="adicionarObservacao(this)" title="Adicionar Observação"></i>
+            </td>
+        `;
+
+        tabelaAmbiente.querySelector('tbody').appendChild(newRow);
+    });
+
+    // Tornar a tabela ordenável e atualizável
+    $(`#tabela-${ambienteSelecionado} tbody`).sortable({
+        placeholder: "ui-state-highlight",
+        axis: "y",
+        cursor: "move",
+        update: function(event, ui) {
+            atualizarTodosOsCalculos(ambienteSelecionado);
+        }
+    }).disableSelection();
+
+    // Atualiza os cálculos totais para o ambiente selecionado
+    atualizarTodosOsCalculos(ambienteSelecionado);
+
+    // Fechar o modal de produtos
+    const produtoGenericoModal = bootstrap.Modal.getInstance(document.getElementById('produtoGenericoModal'));
+    produtoGenericoModal.hide();
 }
 
 // Função para visualizar os detalhes do produto em um alert
