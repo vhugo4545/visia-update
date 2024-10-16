@@ -1,6 +1,7 @@
 
 buscarClientes()
 
+
 //PopUps
 function cadastrarNovoCliente() {
     // Cria o overlay do popup
@@ -220,10 +221,98 @@ function preencherCamposCliente(cliente) {
     document.getElementById('telefone').value = cliente.telefone || '';
     document.getElementById('idClienteOmie').value = cliente.value || '';
 }
+//modal produtos genericos
+// Função para abrir o modal
+function abrirModal() {
+    document.getElementById('adicionarProdutoModal').style.display = 'block';
+}
 
+// Função para fechar o modal
+function fecharModal() {
+    document.getElementById('adicionarProdutoModal').style.display = 'none';
+}
+
+// Evento para abrir o modal ao clicar no botão "Abrir Modal"
+document.getElementById('abrirModalBtn').addEventListener('click', abrirModal);
+
+// Função que será chamada ao clicar no botão de "Adicionar Produto"
+document.getElementById('incluirProdutoBtn').addEventListener('click', function () {
+    // Validação básica do formulário antes de continuar
+    const nomeProduto = document.getElementById('nomeProduto').value;
+    const valorUnitario = document.getElementById('valorUnitario').value;
+    const quantidade = document.getElementById('quantidade').value;
+
+    if (!nomeProduto || !valorUnitario || !quantidade) {
+        alert('Por favor, preencha todos os campos obrigatórios.');
+        return;
+    }
+
+    // Chamar a função adicionarOuIncluirProdutoGenerico (ajuste conforme a lógica da sua função)
+    adicionarOuIncluirProdutoGenerico();
+
+    // Fechar o modal após a inclusão
+    fecharModal();
+});
 
 
 //Barras de pesquisa e ambientes
+
+// Função para adicionar o produto  generico com os dados preenchidos no modal
+function adicionarProduto() {
+    const nomeProduto = document.getElementById('nomeProduto').value;
+    const valorUnitario = parseFloat(document.getElementById('valorUnitario').value);
+    const quantidade = parseInt(document.getElementById('quantidade').value);
+    const imagemUrl = document.getElementById('imagemUrl').value;
+    const ambienteSelecionado = document.getElementById('ambienteSelecionado').value;
+
+    // Verifica se o ambiente foi selecionado
+    if (!ambienteSelecionado) {
+        alert('Por favor, selecione um ambiente antes de adicionar o produto.');
+        return;
+    }
+
+    // Validação dos campos obrigatórios
+    if (!nomeProduto || isNaN(valorUnitario) || isNaN(quantidade) || quantidade <= 0) {
+        alert('Por favor, preencha todos os campos corretamente.');
+        return;
+    }
+
+    let tabelaAmbiente = document.getElementById(`tabela-${ambienteSelecionado}`);
+    if (!tabelaAmbiente) {
+        criarTabelaAmbiente(ambienteSelecionado);
+        tabelaAmbiente = document.getElementById(`tabela-${ambienteSelecionado}`);
+    }
+
+    const valorTotal = valorUnitario * quantidade;
+
+    const row = document.createElement('tr');
+    row.innerHTML = `
+        <td><input type="checkbox" class="checkbox-selecionar-produto"></td>
+        <td>${imagemUrl ? `<img src="${imagemUrl}" alt="Imagem do Produto Selecionado" style="max-width: 50px;">` : 'Sem imagem'}</td>
+        <td>${nomeProduto}</td>
+        <td>101020</td> <!-- Código do Produto (Substituir por valor correto, se necessário) -->
+        <td>101020</td> <!-- Código Interno (Substituir por valor correto, se necessário) -->
+        <td><span class="valorUnitario">${valorUnitario.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span></td>
+        <td><input type="number" class="form-control quantidadeProduto" min="1" value="${quantidade}" onchange="atualizarTodosOsCalculos('${ambienteSelecionado}')"></td>
+        <td><input type="text" class="form-control valorTotal" value="${(valorUnitario * quantidade).toFixed(2).replace('.', ',')}" onchange="atualizarValorUnitario(this, '${ambienteSelecionado}')"></td>
+        <td>
+            <i class="fa fa-times" style="cursor: pointer; color: red;" onclick="removerProduto(this, '${ambienteSelecionado}')" title="Remover Produto"></i>
+            <i class="fa fa-question-circle" style="cursor: pointer; color: blue; margin-right: 10px;" onclick="adicionarObservacao(this)" title="Adicionar Observação"></i>
+        </td>
+    `;
+
+    tabelaAmbiente.querySelector('tbody').appendChild(row);
+
+    // Atualizar todos os cálculos
+    atualizarTodosOsCalculos(ambienteSelecionado);
+
+    // Exibir alerta de confirmação
+    alert('Produto adicionado com sucesso!');
+
+    // Fechar o modal após adicionar o produto
+    fecharModal();
+}
+
 // Função para filtrar e exibir os produtos na tabela de pesquisa
 async function filtrarProdutos() {
     const pesquisa = document.getElementById('pesquisaProduto').value.toLowerCase();
