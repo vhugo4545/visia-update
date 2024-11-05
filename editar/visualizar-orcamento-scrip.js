@@ -241,7 +241,7 @@ async function salvarCliente(nomeFantasia, razaoSocial, email, codigoIntegracao)
 
     try {
         // Fazer a requisição POST para incluir o cliente
-        const response = await fetch('https://acropoluz-one-cdc9c4e154cc.herokuapp.com/clientes/incluirCliente', {
+        const response = await fetch('https://acropoluz-a7ff621dca79.herokuapp.com/clientes/incluirCliente', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -298,7 +298,7 @@ async function filtrarProdutos() {
     const termosPesquisa = pesquisa.split('/').map(termo => termo.trim());
 
     try {
-        const response = await fetch('https://acropoluz-one-cdc9c4e154cc.herokuapp.com/produtos/visualizar');
+        const response = await fetch('https://acropoluz-a7ff621dca79.herokuapp.com/produtos/visualizar');
         if (!response.ok) {
             throw new Error('Erro ao buscar os produtos');
         }
@@ -351,7 +351,7 @@ async function pesquisarAmbiente() {
     }
 
     try {
-        const response = await fetch('https://acropoluz-one-cdc9c4e154cc.herokuapp.com/ambientes');
+        const response = await fetch('https://acropoluz-a7ff621dca79.herokuapp.com/ambientes');
         if (!response.ok) {
             throw new Error('Erro ao buscar os ambientes');
         }
@@ -724,6 +724,28 @@ function adicionarOuIncluirProdutoGenerico() {
 // Função para remover produto e atualizar os cálculos
 function removerProduto(element, ambienteSelecionado) {
     const row = element.closest('tr');
+     // Confirmação de remoção
+     const confirmacao = confirm("Tem certeza que deseja remover este produto?");
+     if (confirmacao) {
+         // Seleciona a linha do produto que será removida
+         const row = element.closest('tr');
+         
+         // Verificar se a linha de observação (comentário) existe logo após a linha do produto
+         const nextRow = row.nextElementSibling;
+         if (nextRow && nextRow.classList.contains('observacao-row')) {
+             // Remover também a linha de observação, caso exista
+             nextRow.remove();
+         }
+ 
+         // Remover a linha do produto da tabela
+         row.remove();
+         
+         // Após remover o produto, recalcular o total do ambiente
+         atualizarTodosOsCalculos(ambiente);
+         
+         // Exibir mensagem de sucesso
+         alert("Produto removido com sucesso!");
+     }
     row.remove();
     atualizarTodosOsCalculos(ambienteSelecionado);
 }
@@ -1171,7 +1193,7 @@ async function atualizarProposta() {
         console.log('Enviando pedido para salvar:', JSON.stringify(pedido, null, 2)); // Log detalhado para ver o pedido sendo enviado
 
         // Fazer a requisição de atualização do pedido
-        const response = await fetch(`https://acropoluz-one-cdc9c4e154cc.herokuapp.com/pedido/${idPedido}`, {
+        const response = await fetch(`https://acropoluz-a7ff621dca79.herokuapp.com/pedido/${idPedido}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -1304,7 +1326,7 @@ async function gerarEEnviarProposta() {
 
     try {
         console.log(proposta);
-        const response = await fetch('https://acropoluz-one-cdc9c4e154cc.herokuapp.com/omie/incluir-pedido', {
+        const response = await fetch('https://acropoluz-a7ff621dca79.herokuapp.com/omie/incluir-pedido', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -1337,7 +1359,7 @@ async function buscarPedidoPorId() {
     }
 
     try {
-        const response = await fetch(`https://acropoluz-one-cdc9c4e154cc.herokuapp.com/pedido/${idPedido}`);
+        const response = await fetch(`https://acropoluz-a7ff621dca79.herokuapp.com/pedido/${idPedido}`);
 
         if (!response.ok) {
             throw new Error(`Erro ao buscar o pedido. Status: ${response.status}`);
@@ -1390,7 +1412,7 @@ async function salvarCliente() {
     try {
         console.log(clienteData)
         // Fazer a requisição POST para incluir o cliente
-        const response = await fetch('https://acropoluz-one-cdc9c4e154cc.herokuapp.com/clientes/incluirCliente', {
+        const response = await fetch('https://acropoluz-a7ff621dca79.herokuapp.com/clientes/incluirCliente', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -1441,7 +1463,7 @@ function gerarCodigoClienteIntegracao() {
 // Função para buscar clientes
 async function buscarClientes() {
     try {
-        const response = await fetch('https://acropoluz-one-cdc9c4e154cc.herokuapp.com/clientes/visualizar');
+        const response = await fetch('https://acropoluz-a7ff621dca79.herokuapp.com/clientes/visualizar');
         if (!response.ok) {
             throw new Error('Erro ao buscar os clientes');
         }
@@ -1472,7 +1494,7 @@ async function buscarClientes() {
 async function atualizarClientes() {
     try {
         alert('Sua lista de clientes esta sendo atualizada');
-        const response = await fetch('https://acropoluz-one-cdc9c4e154cc.herokuapp.com/clientes/atualizar', {
+        const response = await fetch('https://acropoluz-a7ff621dca79.herokuapp.com/clientes/atualizar', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -1495,7 +1517,7 @@ async function atualizarClientes() {
 async function atualizacaoDeProdutos() {
     try {
         alert("Atualização de produtos Iniciada!")
-        const response = await fetch('https://acropoluz-one-cdc9c4e154cc.herokuapp.com/produtos/atualizar', {
+        const response = await fetch('https://acropoluz-a7ff621dca79.herokuapp.com/produtos/atualizar', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -1529,7 +1551,7 @@ async function atualizarStatusParaEfetivado() {
 
     try {
         // Fazer uma requisição GET para obter o pedido existente
-        const responseGet = await fetch(`https://acropoluz-one-cdc9c4e154cc.herokuapp.com/pedido/${idPedido}`);
+        const responseGet = await fetch(`https://acropoluz-a7ff621dca79.herokuapp.com/pedido/${idPedido}`);
 
         if (!responseGet.ok) {
             throw new Error(`Erro ao buscar o pedido: ${responseGet.status} - ${responseGet.statusText}`);
@@ -1542,7 +1564,7 @@ async function atualizarStatusParaEfetivado() {
         pedido.status = 'Efetivado';
 
         // Fazer a requisição de atualização do pedido
-        const responsePut = await fetch(`https://acropoluz-one-cdc9c4e154cc.herokuapp.com/pedido/${idPedido}`, {
+        const responsePut = await fetch(`https://acropoluz-a7ff621dca79.herokuapp.com/pedido/${idPedido}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -1584,7 +1606,7 @@ async function atualizarStatusParaPerdido() {
 
     try {
         // Fazer uma requisição GET para obter o pedido existente
-        const responseGet = await fetch(`https://acropoluz-one-cdc9c4e154cc.herokuapp.com/pedido/${idPedido}`);
+        const responseGet = await fetch(`https://acropoluz-a7ff621dca79.herokuapp.com/pedido/${idPedido}`);
 
         if (!responseGet.ok) {
             throw new Error(`Erro ao buscar o pedido: ${responseGet.status} - ${responseGet.statusText}`);
@@ -1597,7 +1619,7 @@ async function atualizarStatusParaPerdido() {
         pedido.status = 'Perdido';
 
         // Fazer a requisição de atualização do pedido
-        const responsePut = await fetch(`https://acropoluz-one-cdc9c4e154cc.herokuapp.com/pedido/${idPedido}`, {
+        const responsePut = await fetch(`https://acropoluz-a7ff621dca79.herokuapp.com/pedido/${idPedido}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'

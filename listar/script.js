@@ -1,5 +1,5 @@
 // URL da API de pedidos
-const apiUrl = 'https://acropoluz-one-cdc9c4e154cc.herokuapp.com/pedido/';
+const apiUrl = 'https://acropoluz-a7ff621dca79.herokuapp.com/pedido/';
 
 
 // Função para buscar os pedidos da API e preencher a tabela
