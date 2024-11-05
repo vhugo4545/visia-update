@@ -1802,7 +1802,7 @@ function gerarPaginaOrcamento() {
         <body>
             <!-- Logo -->
             <div class="logo-container">
-                <img src="WhatsApp Image 2024-09-30 at 3.06.27 PM.jpeg" alt="Logo">
+                <img src="Imagem do WhatsApp de 2024-10-29 à(s) 16.36.42_2f612ce2.jpeg" alt="Logo">
             </div>
 
             <div class="container my-5">
@@ -1991,7 +1991,7 @@ function gerarPaginaOrcamentoSemValores() {
         <body>
             <!-- Logo -->
             <div class="logo-container">
-                <img src="WhatsApp Image 2024-09-30 at 3.06.27 PM.jpeg" alt="Logo">
+                <img src="Imagem do WhatsApp de 2024-10-29 à(s) 16.36.42_2f612ce2.jpeg" alt="Logo">
             </div>
 
             <div class="container my-5">
