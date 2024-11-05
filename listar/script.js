@@ -2,6 +2,7 @@
 const apiUrl = 'https://acropoluz-a7ff621dca79.herokuapp.com/pedido/';
 
 
+
 // Função para buscar os pedidos da API e preencher a tabela
 async function carregarPedidos() {
     try {
