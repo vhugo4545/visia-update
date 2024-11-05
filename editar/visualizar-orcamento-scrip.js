@@ -1860,6 +1860,7 @@ function gerarPaginaOrcamentoSemValores() {
         return;
     }
     
+
     // Obter as informações do cliente e do pedido
     const nomeCliente = document.getElementById('nome').value;
     const cpfCnpj = document.getElementById('cpfCnpj').value;
