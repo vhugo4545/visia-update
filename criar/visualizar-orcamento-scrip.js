@@ -189,7 +189,7 @@ async function salvarCliente(nomeFantasia, razaoSocial, email, codigoIntegracao)
 
     try {
         // Fazer a requisição POST para incluir o cliente
-        const response = await fetch('https://acropoluz-a7ff621dca79.herokuapp.com/clientes/incluirCliente', {
+        const response = await fetch('https://visia-b167064af0f4.herokuapp.com/clientes/incluirCliente', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -333,7 +333,7 @@ async function filtrarProdutos() {
     const termosPesquisa = pesquisa.split('/').map(termo => termo.trim());
 
     try {
-        const response = await fetch('https://acropoluz-a7ff621dca79.herokuapp.com/produtos/visualizar');
+        const response = await fetch('https://visia-b167064af0f4.herokuapp.com/produtos/visualizar');
         if (!response.ok) {
             throw new Error('Erro ao buscar os produtos');
         }
@@ -387,7 +387,7 @@ async function pesquisarAmbiente() {
     }
 
     try {
-        const response = await fetch('https://acropoluz-a7ff621dca79.herokuapp.com/ambientes');
+        const response = await fetch('https://visia-b167064af0f4.herokuapp.com/ambientes');
         if (!response.ok) {
             throw new Error('Erro ao buscar os ambientes');
         }
@@ -430,7 +430,7 @@ function removerProduto(element, ambiente) {
         // Seleciona a linha do produto que será removida
         const row = element.closest('tr');
         
-        // Verificar se a linha de observação (comentário) existe logo após a linha do produto
+        // Verificar se a linha de observação (comentário) existe logo. após a linha do produto
         const nextRow = row.nextElementSibling;
         if (nextRow && nextRow.classList.contains('observacao-row')) {
             // Remover também a linha de observação, caso exista
@@ -654,13 +654,13 @@ function adicionarObservacao(element) {
     // Linha do produto onde a observação será adicionada
     const row = element.closest('tr');
     
-    // Verificar se a linha de observação já existe logo após a linha do produto
+    // Verificar se a linha de observação já existe logo. após a linha do produto
     const nextRow = row.nextElementSibling;
     if (nextRow && nextRow.classList.contains('observacao-row')) {
         // Se a linha de observação já existe, alterna a visibilidade (mostrar/ocultar)
         nextRow.style.display = nextRow.style.display === 'none' ? 'table-row' : 'none';
     } else {
-        // Se não existe, cria uma nova linha de observação logo abaixo do produto
+        // Se não existe, cria uma nova linha de observação logo. abaixo do produto
         const observacaoRow = document.createElement('tr');
         observacaoRow.classList.add('observacao-row'); // Classe para identificar a linha de observação
         
@@ -671,7 +671,7 @@ function adicionarObservacao(element) {
             </td>
         `;
         
-        // Insere a nova linha de observação logo após a linha do produto
+        // Insere a nova linha de observação logo. após a linha do produto
         row.parentNode.insertBefore(observacaoRow, row.nextSibling);
     }
 }
@@ -1056,7 +1056,7 @@ async function atualizarProposta() {
         console.log('Enviando pedido para salvar:', JSON.stringify(pedido, null, 2)); // Log detalhado para ver o pedido sendo enviado
 
         // Fazer a requisição de atualização do pedido
-        const response = await fetch(`https://acropoluz-a7ff621dca79.herokuapp.com/pedido/${idPedido}`, {
+        const response = await fetch(`https://visia-b167064af0f4.herokuapp.com/pedido/${idPedido}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -1178,7 +1178,7 @@ async function gerarEEnviarProposta() {
 
     try {
         console.log(proposta)
-        const response = await fetch('https://acropoluz-a7ff621dca79.herokuapp.com/omie/incluir-pedido', {
+        const response = await fetch('https://visia-b167064af0f4.herokuapp.com/omie/incluir-pedido', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -1213,7 +1213,7 @@ async function salvarCliente() {
     try {
         console.log(clienteData)
         // Fazer a requisição POST para incluir o cliente
-        const response = await fetch('https://acropoluz-a7ff621dca79.herokuapp.com/clientes/incluirCliente', {
+        const response = await fetch('https://visia-b167064af0f4.herokuapp.com/clientes/incluirCliente', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -1264,7 +1264,7 @@ function gerarCodigoClienteIntegracao() {
 // Função para buscar clientes
 async function buscarClientes() {
     try {
-        const response = await fetch('https://acropoluz-a7ff621dca79.herokuapp.com/clientes/visualizar');
+        const response = await fetch('https://visia-b167064af0f4.herokuapp.com/clientes/visualizar');
         if (!response.ok) {
             throw new Error('Erro ao buscar os clientes');
         }
@@ -1295,7 +1295,7 @@ async function buscarClientes() {
 async function atualizarClientes() {
     try {
         alert('Sua lista de clientes esta sendo atualizada');
-        const response = await fetch('https://acropoluz-a7ff621dca79.herokuapp.com/clientes/atualizar', {
+        const response = await fetch('https://visia-b167064af0f4.herokuapp.com/clientes/atualizar', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -1318,7 +1318,7 @@ async function atualizarClientes() {
 async function atualizacaoDeProdutos() {
     try {
         alert("Atualização de produtos Iniciada!")
-        const response = await fetch('https://acropoluz-a7ff621dca79.herokuapp.com/produtos/atualizar', {
+        const response = await fetch('https://visia-b167064af0f4.herokuapp.com/produtos/atualizar', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -1439,7 +1439,7 @@ const ambiente = container.querySelector("h4").innerText.trim().replace("Excluir
 
     // Fazer a requisição POST para criar o pedido
     try {
-        const response = await fetch('https://acropoluz-a7ff621dca79.herokuapp.com/pedido/criar', {
+        const response = await fetch('https://visia-b167064af0f4.herokuapp.com/pedido/criar', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -1569,12 +1569,12 @@ function gerarPaginaOrcamento() {
                     font-family: Arial, sans-serif;
                     margin: 10px;
                 }
-                .logo-container {
+                .logo.-container {
                     width: 100%;
                     text-align: center;
                     margin-bottom: 20px;
                 }
-                .logo-container img {
+                .logo.-container img {
                     max-width: 100%;
                     height: auto;
                 }
@@ -1622,9 +1622,9 @@ function gerarPaginaOrcamento() {
             </style>
         </head>
         <body>
-            <!-- Logo -->
-            <div class="logo-container">
-                <img src="Imagem do WhatsApp de 2024-10-29 à(s) 16.36.42_2f612ce2.jpeg" alt="Logo">
+            <!-- logo. -->
+            <div class="logo.-container">
+                <img src="logo.jpeg" alt="logo.">
             </div>
 
             <div class="container my-5">
@@ -1758,12 +1758,12 @@ function gerarPaginaOrcamentoSemValores() {
                     font-family: Arial, sans-serif;
                     margin: 10px;
                 }
-                .logo-container {
+                .logo.-container {
                     width: 100%;
                     text-align: center;
                     margin-bottom: 20px;
                 }
-                .logo-container img {
+                .logo.-container img {
                     max-width: 100%;
                     height: auto;
                 }
@@ -1811,9 +1811,9 @@ function gerarPaginaOrcamentoSemValores() {
             </style>
         </head>
         <body>
-            <!-- Logo -->
-            <div class="logo-container">
-                <img src="Imagem do WhatsApp de 2024-10-29 à(s) 16.36.42_2f612ce2.jpeg" alt="Logo">
+            <!-- logo. -->
+            <div class="logo.-container">
+                <img src="logo.jpeg" alt="logo.">
             </div>
 
             <div class="container my-5">
