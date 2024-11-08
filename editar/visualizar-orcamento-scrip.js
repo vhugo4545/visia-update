@@ -1690,8 +1690,7 @@ function gerarPaginaOrcamento() {
             const valorTotal = row.querySelector('.valorTotal').value;
             const observacao = row.querySelector('textarea') ? row.querySelector('textarea').value.trim() : '';
 
-            // Filtrar o nome do produto: remover "**" e limitar aos 10 primeiros caracteres
-            nomeProduto = nomeProduto.replace(/\*\*/g, '').substring(0, 10);
+        
 
             linhasTabelaHtml += `
                 <tr>
