@@ -1207,6 +1207,7 @@ async function salvarCliente() {
         email: document.getElementById('clienteEmail').value,
         razao_social:document.getElementById('clienteRazaoSocial').value,
         nome_fantasia: document.getElementById('clienteRazaoSocial').value,
+        telefone2_numero: document.getElementById('clienteTelefone').value,
         estado:"MG"
     };
 
